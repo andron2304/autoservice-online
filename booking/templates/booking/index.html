@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Наші послуги</title>
+</head>
+<body>
+    <h1>Доступні послуги нашого СТО</h1>
+    <ul>
+        {% for service in services %}
+            <li>
+                <strong>{{ service.name }}</strong> — {{ service.price }} грн
+                <p>{{ service.description }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'book_appointment' %}">Записатися на сервіс</a>
+</body>
+</html>

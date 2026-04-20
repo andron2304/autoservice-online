@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Наші послуги</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f4f4; }
+        .service-card { background: white; padding: 20px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .price { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Послуги нашого СТО</h1>
+    {% for service in services %}
+        <div class="service-card">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+            <p class="price">Вартість: {{ service.price }} грн</p>
+        </div>
+    {% empty %}
+        <p>Послуг поки немає. Додай їх в адмінці!</p>
+    {% endfor %}
+    <br>
+    <a href="{% url 'book_appointment' %}">Записатися на сервіс</a>
+</body>
+</html>
