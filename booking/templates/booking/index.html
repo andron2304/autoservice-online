@@ -1,18 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Наші послуги</title>
-</head>
-<body>
-    <h1>Доступні послуги нашого СТО</h1>
-    <ul>
-        {% for service in services %}
-            <li>
-                <strong>{{ service.name }}</strong> — {{ service.price }} грн
-                <p>{{ service.description }}</p>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'book_appointment' %}">Записатися на сервіс</a>
-</body>
-</html>
+{% extends 'booking/base.html' %}
+
+{% block title %}AutoService - Професійний сервіс у Рівному{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-5 bg-white border rounded-0 shadow-sm position-relative overflow-hidden hero-banner">
+    <div class="row align-items-center">
+        <div class="col-lg-7 z-2">
+            <h1 class="display-4 fw-bold text-dark mb-3">
+                Професійний сервіс <br>
+                <span class="text-bosch-blue">у місті Рівне</span>
+            </h1>
+            <p class="fs-5 text-muted mb-4 shadow-text">
+                Ми пропонуємо повний спектр послуг з діагностики, ремонту та обслуговування вашого автомобіля за європейськими стандартами якості.
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="{% url 'booking:book_service' %}" class="btn btn-bosch btn-lg px-5 py-3 shadow-sm transition-btn">
+                    <i class="bi bi-calendar-check me-2"></i> Записатися на сервіс
+                </a>
+                <a href="{% url 'booking:service_list' %}" class="btn btn-outline-dark btn-lg px-4 py-3 transition-btn">
+                    Переглянути прайс
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block text-end">
+            <i class="bi bi-car-front-fill text-light" style="font-size: 18rem; opacity: 0.1; position: absolute; right: -20px; top: -20px;"></i>
+            <i class="bi bi-wrench-adjustable text-bosch-blue" style="font-size: 12rem; opacity: 0.05;"></i>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="bg-dark text-white p-0 rounded-0 d-flex flex-column flex-md-row align-items-stretch justify-content-between shadow-lg hotline-border">
+            <div class="d-flex align-items-center p-4">
+                <div class="bg-danger p-3 me-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <i class="bi bi-headset fs-1"></i>
+                </div>
+                <div>
+                    <h4 class="mb-1 text-uppercase fw-bold tracking-wider">Гаряча лінія підтримки</h4>
+                    <p class="mb-0 text-light opacity-75">Маєте питання? Наші майстри готові проконсультувати прямо зараз</p>
+                </div>
+            </div>
+            <div class="p-4 bg-secondary bg-opacity-25 d-flex flex-column justify-content-center align-items-md-end text-center text-md-end border-md-start border-secondary">
+                <a href="tel:+380671234567" class="h2 text-white text-decoration-none fw-bold d-block mb-1 hover-red">
+                    +38 (067) 123-45-67
+                </a>
+                <span class="badge bg-danger py-2 px-3 rounded-0 text-uppercase">Працюємо 24/7</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 text-center">
+    <div class="col-md-3">
+        <div class="p-4 bg-white shadow-sm h-100 border-bottom border-3 border-transparent hover-bosch-blue transition-all">
+            <div class="icon-circle mb-3 mx-auto">
+                <i class="bi bi-cpu fs-1"></i>
+            </div>
+            <h5 class="fw-bold">Діагностика</h5>
+            <p class="small text-muted">Повна перевірка всіх систем електроніки та двигуна.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 bg-white shadow-sm h-100 border-bottom border-3 border-transparent hover-bosch-blue transition-all">
+            <div class="icon-circle mb-3 mx-auto">
+                <i class="bi bi-droplet-half fs-1"></i>
+            </div>
+            <h5 class="fw-bold">Мастила</h5>
+            <p class="small text-muted">Заміна технічних рідин та фільтрів оригінальної якості.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 bg-white shadow-sm h-100 border-bottom border-3 border-transparent hover-bosch-blue transition-all">
+            <div class="icon-circle mb-3 mx-auto">
+                <i class="bi bi-lightning-charge fs-1"></i>
+            </div>
+            <h5 class="fw-bold">Електроніка</h5>
+            <p class="small text-muted">Ремонт проводки, стартерів та систем освітлення.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 bg-white shadow-sm h-100 border-bottom border-3 border-transparent hover-bosch-blue transition-all">
+            <div class="icon-circle mb-3 mx-auto">
+                <i class="bi bi-shield-check fs-1"></i>
+            </div>
+            <h5 class="fw-bold">Гарантія</h5>
+            <p class="small text-muted">Надаємо офіційну гарантію на всі виконані роботи.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Фірмові кольори */
+    :root {
+        --bosch-blue: #005696;
+        --bosch-red: #ff0000;
+    }
+    
+    .text-bosch-blue { color: var(--bosch-blue); }
+    .hero-banner { border-left: 10px solid var(--bosch-blue) !important; }
+    
+    /* Анімації та ефекти */
+    .transition-all { transition: all 0.3s ease; }
+    .transition-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important; }
+    
+    .hotline-border { border-left: 5px solid var(--bosch-red); }
+    .tracking-wider { letter-spacing: 1px; }
+    
+    .hover-red:hover { color: var(--bosch-red) !important; transition: 0.2s; }
+    
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        background: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bosch-blue);
+        transition: 0.3s;
+    }
+    
+    /* Ефект при наведенні на картку */
+    .hover-bosch-blue:hover {
+        background-color: #fff !important;
+        border-bottom-color: var(--bosch-blue) !important;
+        transform: translateY(-5px);
+    }
+    
+    .hover-bosch-blue:hover .icon-circle {
+        background-color: var(--bosch-blue);
+        color: white;
+    }
+
+    .border-transparent { border-bottom-color: transparent; }
+</style>
+{% endblock %}

@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Запис на сервіс</title>
-</head>
-<body>
-    <h1>Запис на обслуговування</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Дата: <input type="date" name="date" required></p>
-        <p>Час: <input type="time" name="time" required></p>
-        <button type="submit">Підтвердити запис</button>
-    </form>
-    <br>
-    <a href="{% url 'service_list' %}">Назад до списку послуг</a>
-</body>
-</html>
+{% extends 'booking/base.html' %}
+
+{% block title %}Запис на СТО{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 mt-4">
+        <h3 class="mb-4">Оформлення запису</h3>
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success w-100 mt-3">Підтвердити запис</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

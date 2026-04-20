@@ -1,27 +1,52 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Наші послуги</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; background: #f4f4f4; }
-        .service-card { background: white; padding: 20px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .price { color: green; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <h1>Послуги нашого СТО</h1>
-    {% for service in services %}
-        <div class="service-card">
-            <h3>{{ service.name }}</h3>
-            <p>{{ service.description }}</p>
-            <p class="price">Вартість: {{ service.price }} грн</p>
+{% extends 'booking/base.html' %}
+
+{% block title %}Послуги СТО{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Наші послуги</h1>
+        <p class="lead text-muted">Оберіть необхідний сервіс для вашого авто</p>
+    </div>
+
+    <div class="row g-4">
+        {% for service in services %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 transition-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                            <i class="bi bi-gear-fill text-primary fs-4"></i> </div>
+                        <h4 class="card-title mb-0">{{ service.name }}</h4>
+                    </div>
+                    <p class="card-text text-secondary">
+                        Гарантуємо якісне виконання робіт сертифікованими майстрами на сучасному обладнанні.
+                    </p>
+                </div>
+                <div class="card-footer bg-light p-4 border-0 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted d-block small">Ціна від</span>
+                        <span class="h5 mb-0 text-dark fw-bold">{{ service.price }} грн</span>
+                    </div>
+                    <a href="{% url 'booking:book_service' %}?service_id={{ service.id }}" class="btn btn-primary px-4 py-2 rounded-pill">
+                        Записатися
+                    </a>
+                </div>
+            </div>
         </div>
-    {% empty %}
-        <p>Послуг поки немає. Додай їх в адмінці!</p>
-    {% endfor %}
-    <br>
-    <a href="{% url 'book_appointment' %}">Записатися на сервіс</a>
-</body>
-</html>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h3>Поки що послуг немає, але скоро з'являться!</h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .transition-hover:hover {
+        transform: translateY(-10px);
+        transition: 0.3s;
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+</style>
+{% endblock %}

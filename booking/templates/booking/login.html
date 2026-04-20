@@ -1,0 +1,42 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Вхід - AutoService{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5 mt-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Вхід у систему</h3>
+                
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        Логін або пароль невірні. Спробуйте ще раз.
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Логін</label>
+                        <input type="text" name="username" class="form-control" id="id_username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Пароль</label>
+                        <input type="password" name="password" class="form-control" id="id_password" required>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">Увійти</button>
+                    </div>
+                </form>
+                <div class="mt-3 text-center">
+                    <p>Ще не зареєстровані? <a href="{% url 'booking:register' %}">Створити акаунт</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}Додати авто{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 mt-4">
+        <h3 class="mb-4">Мій гараж: Додати автомобіль</h3>
+        <div class="alert alert-info">
+            Щоб записатися на сервіс, спочатку додайте свій автомобіль до системи.
+        </div>
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Зберегти та перейти до запису</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

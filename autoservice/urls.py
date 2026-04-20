@@ -3,5 +3,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('booking.urls')), # Додаємо цей рядок
+    # Підключаємо всі URL з додатка booking
+    path('', include('booking.urls')), 
 ]
