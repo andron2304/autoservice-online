@@ -3,48 +3,104 @@
 {% block title %}Мій кабінет{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="mb-4">Привіт, {{ user.username }}! 👋</h2>
+<style>
+    /* Стилі для відповідності головній сторінці */
+    .cabinet-greeting {
+        color: #0b3d60; /* Темно-синій як на головній */
+        font-weight: 700;
+    }
+    .custom-card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* М'яка тінь */
+        overflow: hidden;
+    }
+    .custom-card-header {
+        background-color: #0056b3; /* Фірмовий синій колір кнопок */
+        color: white;
+        padding: 1rem 1.25rem;
+        border-bottom: none;
+    }
+    .btn-add-car {
+        background-color: transparent;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .btn-add-car:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: white;
+    }
+    .custom-badge {
+        background-color: #f8f9fa;
+        color: #495057;
+        border: 1px solid #dee2e6;
+        font-weight: 500;
+    }
+    .custom-link {
+        color: #0056b3;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .custom-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4 cabinet-greeting">Привіт, {{ user.username }}! 👋</h2>
 
     <div class="row">
         <div class="col-md-5 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card custom-card">
+                <div class="custom-card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Мій гараж</h5>
-                    <a href="{% url 'booking:add_car' %}" class="btn btn-sm btn-light">+ Додати авто</a>
+                    <a href="{% url 'booking:add_car' %}" class="btn btn-sm btn-add-car">+ Додати авто</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     {% for car in cars %}
                         <div class="mb-3 pb-3 border-bottom">
-                            <strong>{{ car.make }} {{ car.model }}</strong> ({{ car.year }})<br>
+                            <h6 class="mb-1" style="color: #2c3e50;"><strong>{{ car.make }} {{ car.model }}</strong> ({{ car.year }})</h6>
                             <small class="text-muted">VIN: {{ car.vin }}</small>
                         </div>
                     {% empty %}
-                        <p class="text-muted mb-0">У вас ще немає доданих авто.</p>
+                        <div class="text-center py-3">
+                            <p class="text-muted mb-0">У вас ще немає доданих авто.</p>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
 
         <div class="col-md-7 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-success text-white">
+            <div class="card custom-card">
+                <div class="custom-card-header">
                     <h5 class="mb-0">Мої записи на СТО</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     {% for booking in bookings %}
                         <div class="mb-3 pb-3 border-bottom">
-                            <div class="d-flex justify-content-between">
-                                <strong>{{ booking.service.name }}</strong>
-                                <span class="badge bg-info text-dark">{{ booking.status }}</span>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong style="color: #0b3d60; font-size: 1.1rem;">{{ booking.service.name }}</strong>
+                                <span class="badge custom-badge">{{ booking.status }}</span>
                             </div>
-                            <div class="text-muted mt-1">
-                                📅 {{ booking.date|date:"d.m.Y" }} о ⏰ {{ booking.time|time:"H:i" }}<br>
-                                🚗 Авто: {{ booking.car.make }} {{ booking.car.model }}
+                            <div class="text-muted">
+                                <div class="mb-1">
+                                    <span style="color: #0056b3;">📅</span> {{ booking.date|date:"d.m.Y" }} о <strong>{{ booking.time|time:"H:i" }}</strong>
+                                </div>
+                                <div>
+                                    <span style="color: #0056b3;">🚗</span> Авто: {{ booking.car.make }} {{ booking.car.model }}
+                                </div>
                             </div>
                         </div>
                     {% empty %}
-                        <p class="text-muted mb-0">У вас ще немає записів. <a href="{% url 'booking:book_service' %}">Записатися зараз</a>.</p>
+                        <div class="text-center py-4">
+                            <p class="text-muted mb-2">У вас ще немає запланованих візитів.</p>
+                            <a href="{% url 'booking:book_service' %}" class="custom-link">Записатися зараз →</a>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
