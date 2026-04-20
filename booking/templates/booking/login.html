@@ -3,37 +3,101 @@
 {% block title %}Вхід - AutoService{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-5 mt-5">
-        <div class="card shadow">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4">Вхід у систему</h3>
-                
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        Логін або пароль невірні. Спробуйте ще раз.
-                    </div>
-                {% endif %}
+<style>
+    /* Стилі для відповідності головній сторінці */
+    .custom-card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* М'яка тінь */
+    }
+    .custom-title {
+        color: #0b3d60; /* Темно-синій колір як на головній */
+        font-weight: 700;
+    }
+    .custom-btn-primary {
+        background-color: #0056b3; /* Фірмовий синій колір кнопок */
+        border-color: #0056b3;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+    .custom-btn-primary:hover {
+        background-color: #004494;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0,86,179,0.3);
+    }
+    .custom-input {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        padding: 0.75rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .custom-input:focus {
+        border-color: #0056b3;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.15);
+        background-color: #ffffff;
+    }
+    .custom-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    .custom-link {
+        color: #0056b3;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .custom-link:hover {
+        text-decoration: underline;
+    }
+    .custom-alert-danger {
+        background-color: #fff;
+        border-left: 5px solid #dc3545;
+        color: #dc3545;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+</style>
 
-                <form method="post">
-                    {% csrf_token %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 mt-4">
+            <div class="card custom-card">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class="card-title text-center mb-4 custom-title">Вхід у систему</h3>
                     
-                    <div class="mb-3">
-                        <label for="id_username" class="form-label">Логін</label>
-                        <input type="text" name="username" class="form-control" id="id_username" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="id_password" class="form-label">Пароль</label>
-                        <input type="password" name="password" class="form-control" id="id_password" required>
-                    </div>
+                    {% if form.errors %}
+                        <div class="alert custom-alert-danger px-4 py-3 mb-4">
+                            <strong>Помилка:</strong> Логін або пароль невірні. Спробуйте ще раз.
+                        </div>
+                    {% endif %}
 
-                    <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-success btn-lg">Увійти</button>
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="id_username" class="form-label custom-label">Логін</label>
+                            <input type="text" name="username" class="form-control custom-input" id="id_username" required placeholder="Введіть ваш логін">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="id_password" class="form-label custom-label">Пароль</label>
+                            <input type="password" name="password" class="form-control custom-input" id="id_password" required placeholder="Введіть ваш пароль">
+                        </div>
+
+                        <div class="d-grid gap-2 mt-5 mb-2">
+                            <button type="submit" class="btn custom-btn-primary btn-lg">Увійти</button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-muted mb-0">Ще не зареєстровані?</p>
+                        <a href="{% url 'booking:register' %}" class="custom-link">Створити акаунт</a>
                     </div>
-                </form>
-                <div class="mt-3 text-center">
-                    <p>Ще не зареєстровані? <a href="{% url 'booking:register' %}">Створити акаунт</a></p>
                 </div>
             </div>
         </div>
