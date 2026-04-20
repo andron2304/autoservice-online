@@ -1,20 +1,79 @@
 {% extends 'booking/base.html' %}
 
-{% block title %}Запис на СТО{% endblock %}
-
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 mt-4">
-        <h3 class="mb-4">Оформлення запису</h3>
-        <div class="card shadow">
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-success w-100 mt-3">Підтвердити запис</button>
-                </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-bosch-blue text-white py-3">
+                    <h4 class="mb-0 text-center text-uppercase fw-bold">Запис на сервіс</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" id="bookingForm">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-bosch btn-lg">Підтвердити запис</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateInput = document.querySelector('input[name="date"]');
+    const timeInput = document.querySelector('input[name="time"]');
+    
+    // 1. Встановлюємо мінімальну дату — СЬОГОДНІ
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    // Функція для обмеження часу
+    function updateTimeLimits() {
+        const selectedDate = dateInput.value;
+        const now = new Date();
+        const currentTime = now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+        
+        // Встановлюємо загальні межі робочого дня
+        timeInput.setAttribute('min', '08:00');
+        timeInput.setAttribute('max', '19:00');
+
+        if (selectedDate === today) {
+            // Якщо вибрано сьогодні, час не може бути раніше ніж зараз + 30 хв (наприклад)
+            // Або просто не раніше поточної години, якщо зараз робочий час
+            let minTime = "08:00";
+            if (currentTime > "08:00" && currentTime < "19:00") {
+                minTime = currentTime;
+            } else if (currentTime >= "19:00") {
+                // Якщо вже після 19:00, змушуємо вибрати інший день або блокуємо
+                alert("Сьогодні запис уже закритий. Оберіть завтрашню дату.");
+                dateInput.value = "";
+            }
+            timeInput.setAttribute('min', minTime);
+        }
+    }
+
+    // Слухаємо зміни дати
+    dateInput.addEventListener('change', updateTimeLimits);
+    
+    // Запускаємо один раз при завантаженні
+    if (dateInput.value) updateTimeLimits();
+});
+</script>
+
+<style>
+    /* Стилізуємо неактивні дати в календарі (працює в більшості браузерів) */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+    }
+    .btn-bosch {
+        background-color: #005696;
+        color: white;
+        border-radius: 0;
+        font-weight: bold;
+    }
+</style>
 {% endblock %}
