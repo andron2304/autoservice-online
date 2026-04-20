@@ -20,7 +20,7 @@ AutoService Online — це вебзастосунок для автосерві
 ## Технологічний стек
 * Мова програмування: Python
 * Веб-фреймворк: Django
-* База даних: PostgreSQL (pgAdmin 4)
+* База даних: SQLite
 * Контроль версій: Git, GitHub
 * Управління проєктом: GitHub Projects (Kanban)
 
