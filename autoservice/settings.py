@@ -118,3 +118,5 @@ STATIC_URL = 'static/'
 # Куди перенаправляти після успішного входу та виходу
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
